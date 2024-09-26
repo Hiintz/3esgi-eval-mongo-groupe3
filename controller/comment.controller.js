@@ -9,9 +9,14 @@ const Comment = require("./../model/comment.model");
  *     postId: <string>
  * }
  */
-exports.create = async () => {
+exports.create = async (req, res) => {
     try{
-        //TODO
+        let newComment = {
+            message: req.body.message,
+            userId: req.body.userId,
+            postId: req.body.postId
+        }
+        let comment = await Comment.create(newComment);
         res.status(201).json(comment);
     }catch(e){
         res.status(500).json(e.message);
@@ -26,10 +31,14 @@ exports.create = async () => {
  *     message: <string>,
  * }
  */
-exports.update = async () => {
+exports.update = async (req, res) => {
     try{
-        //TODO
-        res.status(200).json({message: "Commentaire mis à jour"});
+        const message = req.body.message;
+        let comment = await Comment.findOneAndUpdate(
+            {_id: req.params.id}, 
+            {$set: {message: message}},
+            { new: true, runValidators: true });
+        res.status(200).json(comment);
     }catch(e){
         res.status(500).json(e.message);
     }
@@ -39,9 +48,9 @@ exports.update = async () => {
  * Méthode pour supprimer un commentaire
  * @param id l'id du commentaire à supprimer
  */
-exports.delete = async () => {
+exports.delete = async (req, res) => {
     try{
-        //TODO
+        await Comment.deleteOne({_id: req.params.id});
         res.status(200).json({message: "Commentaire supprimé"});
     }catch(e){
         res.status(500).json(e.message);
