@@ -1,37 +1,21 @@
 const User = require("./../model/user.model");
 
-/**
- * Methode pour la connexion utilisateur
- * @body
- * {
- *     email: <string>,
- *     password: <string>
- * }
- */
-
 exports.login = async (req, res) => {
   try {
     let user = await User.findOne({
       email: req.body.email,
       password: req.body.password,
     });
-    res.status(200).json(user);
+    if(user){
+       res.status(200).json({message: "Connexion réussie : ", username: user.username});
+    } else {
+        res.status(404).json({message: "Connexion échouée"});
+    }
   } catch (e) {
     res.status(500).json(e.message);
     console.log(e.message);
   }
 };
-
-
-/**
- * Méthode pour la création d'un compte utilisateur
- * @body
- * {
- *     email: <string>,
- *     password: <string>,
- *     username: <string>
- * }
- */
 
 exports.signin = async (req, res) => {
   try {

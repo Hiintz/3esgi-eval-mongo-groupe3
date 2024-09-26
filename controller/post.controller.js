@@ -1,12 +1,6 @@
 const Post = require("./../model/post.model");
+const Comment = require("./../model/comment.model");
 
-/**
- * Methode pour récupérer 10 post (les plus récents) par page
- * @param page le numéro de la page actuelle
- * Si la page est 1 il faut récupérer les 10 post les plus récents
- * Si la page est 2 il faut récupérer les post du 11ème au 20ème les plus récents
- * ...
- */
 exports.getAll = async (req, res, next) => {
     try{
         let page = req.params.page;
@@ -21,27 +15,21 @@ exports.getAll = async (req, res, next) => {
     }
 }
 
-/**
- * Methode pour récupérer un post par son id, et les commentaires associés à ce post
- */
 exports.getById = async (req, res) => {
     try{
         let id = req.params.id;
-        let postWithComment = await Post.findById(id).populate("comments");
-        res.status(200).json(postWithComment);
+        let post = await Post.findById(id);
+        let comments = await Comment.find({postId: id});
+        let postWithComments = {
+            post: post,
+            comments: comments
+        };
+        res.status(200).json(postWithComments);
     }catch(e){
         res.status(500).json(e.message);
     }
 }
 
-/**
- * Methode pour créer un nouveau post (attention à bien enregistrer la date de création)
- * @body
- * {
- *     message: <string>,
- *     userId: <string>
- * }
- */
 exports.create = async (req, res) => {
     try{
         let newPost = {
@@ -56,14 +44,6 @@ exports.create = async (req, res) => {
     }
 }
 
-/**
- * Methode pour modifier un post (attention de bien mettre à jour la date du post)
- * @param id l'id du post à modifier
- * @body
- * {
- *     message: <string>
- * }
- */
 exports.update = async (req, res) => {
     try{
         let postUpdated = await Post.findByIdAndUpdate(req.params.id, {message: req.body.message, date: new Date()});
@@ -73,10 +53,6 @@ exports.update = async (req, res) => {
     }
 }
 
-/**
- * Methode pour supprimer un post (attention de bien supprimer les commentaires associés)
- * @param id l'id du post à supprimer
- */
 exports.delete = async (req, res) => {
     try{
         await Post.findByIdAndDelete(req.params.id);
