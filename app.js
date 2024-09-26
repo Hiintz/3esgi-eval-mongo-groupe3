@@ -1,8 +1,9 @@
 const express = require("express");
 const userRoute = require("./route/user.route");
 const postRoute = require("./route/post.route");
-const commentRoute = require("./route/comment.route");
-const {connect} = require("./model/connexion");
+const commentRoute = require("./route/comment.route.js");
+const { connect } = require("./model/connexion.js");
+
 
 const app = express();
 
@@ -15,7 +16,8 @@ app.use((req, res, next) => {
     next();
 });
 
-async function launch() {
+
+async function launch(){
     await connect();
 }
 
