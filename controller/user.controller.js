@@ -8,6 +8,7 @@ const User = require("./../model/user.model");
  *     password: <string>
  * }
  */
+
 exports.login = async (req, res) => {
   try {
     let user = await User.findOne({
@@ -21,6 +22,7 @@ exports.login = async (req, res) => {
   }
 };
 
+
 /**
  * Méthode pour la création d'un compte utilisateur
  * @body
@@ -30,6 +32,7 @@ exports.login = async (req, res) => {
  *     username: <string>
  * }
  */
+
 exports.signin = async (req, res) => {
   try {
     let user = await User.create({
@@ -44,3 +47,4 @@ exports.signin = async (req, res) => {
     console.log(e.message);
   }
 };
+
