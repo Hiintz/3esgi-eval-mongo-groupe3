@@ -14,7 +14,13 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/user', userRoute);
+async function launch() {
+    await connect();
+}
+
+launch();
+
+// app.use('/user', userRoute);
 app.use('/post', postRoute);
 app.use('/comment', commentRoute);
 
