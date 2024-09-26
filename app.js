@@ -4,6 +4,7 @@ const postRoute = require("./route/post.route");
 const commentRoute = require("./route/comment.route.js");
 const { connect } = require("./model/connexion.js");
 
+
 const app = express();
 
 app.use(express.json());
@@ -14,6 +15,7 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     next();
 });
+
 
 async function launch(){
     await connect();
