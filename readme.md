@@ -7,7 +7,7 @@ Le code nodejs a été prévue en amont, il ne reste qu'à créer les modèles e
 Pour installer ce projet, il est conseiller de faire un fork dans un premier temps, puis de cloner le repo forké.
 Afin d'installer les libraries requises, executez la commande :
 
-    npm init 
+    npm install
 
 
 

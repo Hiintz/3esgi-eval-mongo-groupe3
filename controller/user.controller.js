@@ -8,14 +8,20 @@ const User = require("./../model/user.model");
  *     password: <string>
  * }
  */
-exports.login = async (req,res) => {
-    try{
-        //TODO
-        res.status(200).json(listUser);
-    }catch(e){
-        res.status(500).json(e.message);
-    }
-}
+
+exports.login = async (req, res) => {
+  try {
+    let user = await User.findOne({
+      email: req.body.email,
+      password: req.body.password,
+    });
+    res.status(200).json(user);
+  } catch (e) {
+    res.status(500).json(e.message);
+    console.log(e.message);
+  }
+};
+
 
 /**
  * Méthode pour la création d'un compte utilisateur
@@ -26,11 +32,19 @@ exports.login = async (req,res) => {
  *     username: <string>
  * }
  */
-exports.signin= async (req,res) => {
-    try{
-        //TODO
-        res.status(200).json(listUser);
-    }catch(e){
-        res.status(500).json(e.message);
-    }
-}
+
+exports.signin = async (req, res) => {
+  try {
+    let user = await User.create({
+      email: req.body.email,
+      password: req.body.password,
+      username: req.body.username,
+    });
+    res.status(201).json(user);
+    console.log(user);
+  } catch (e) {
+    res.status(500).json(e.message);
+    console.log(e.message);
+  }
+};
+
