@@ -1,14 +1,5 @@
 const Comment = require("./../model/comment.model");
 
-/**
- * Méthode pour créer un nouveau commentaire
- * @body
- * {
- *     message: <string>,
- *     userId: <string>,
- *     postId: <string>
- * }
- */
 exports.create = async (req, res) => {
     try{
         let newComment = {
@@ -23,14 +14,6 @@ exports.create = async (req, res) => {
     }
 }
 
-/**
- * Méthode pour modifier un commentaire
- * @param id l'id du commentaire à modifier
- * @body
- * {
- *     message: <string>,
- * }
- */
 exports.update = async (req, res) => {
     try{
         const message = req.body.message;
@@ -44,10 +27,6 @@ exports.update = async (req, res) => {
     }
 }
 
-/**
- * Méthode pour supprimer un commentaire
- * @param id l'id du commentaire à supprimer
- */
 exports.delete = async (req, res) => {
     try{
         await Comment.deleteOne({_id: req.params.id});
